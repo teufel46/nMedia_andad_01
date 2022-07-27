@@ -19,11 +19,14 @@ import ru.netology.nmedia.error.AppError
 import ru.netology.nmedia.error.NetworkError
 import ru.netology.nmedia.error.UnknownError
 import java.io.IOException
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class PostRepositoryImpl(
+@Singleton
+class PostRepositoryImpl @Inject constructor(
     private val dao: PostDao,
-    private val apiService : ApiService,
-) : PostRepository {
+    private val apiService: ApiService,
+    ) : PostRepository {
     override val data = dao.getAll()
         .map(List<PostEntity>::toDto)
         .flowOn(Dispatchers.Default)
@@ -130,10 +133,10 @@ class PostRepositoryImpl(
         }
     }
 
-
     override suspend fun saveWithAttachment(post: Post, upload: MediaUpload) {
         try {
             val media = upload(upload)
+            // TODO: add support for other types
             val postWithAttachment =
                 post.copy(attachment = Attachment(media.id, AttachmentType.IMAGE))
             save(postWithAttachment)
@@ -165,7 +168,7 @@ class PostRepositoryImpl(
         }
     }
 
-    override suspend fun updateUser(login: String, pass: String): AuthState {
+    override suspend fun updateUser(login : String, pass : String) : AuthState {
         try {
             val response = apiService.updateUser(login, pass)
 

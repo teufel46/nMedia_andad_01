@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.databinding.FragmentImagePreviewBinding
 import ru.netology.nmedia.view.load
 
+@AndroidEntryPoint
 class ImagePreviewFragment  : Fragment()  {
 
     private var fragmentBinding: FragmentImagePreviewBinding? = null
